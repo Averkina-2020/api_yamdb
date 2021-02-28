@@ -9,6 +9,7 @@ class IsAdminOrReadOnly(permissions.BasePermission):
             return True
         return False
 
+
 class IsAuthorModeratorAdmin(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         return bool(

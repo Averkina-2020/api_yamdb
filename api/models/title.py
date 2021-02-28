@@ -1,8 +1,8 @@
-from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
-
 from .user import User
+
+
 class Title(models.Model):
     text = models.TextField()
     author = models.ForeignKey(

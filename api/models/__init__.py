@@ -1,4 +1,4 @@
 from .comment import Comment
 from .review import Review
-from .user import TempAuth, User
 from .title import Title
+from .user import TempAuth, User

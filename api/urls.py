@@ -1,8 +1,14 @@
+from api.views import (
+    CommentViewSet, ReviewViewSet, UserViewSet,
+    get_jwt_token,
+    send_code
+)
+
 from django.urls import path
 from django.urls.conf import include
+
 from rest_framework.routers import DefaultRouter
 
-from api.views import UserViewSet, get_jwt_token, send_code, CommentViewSet, ReviewViewSet
 
 router_v1 = DefaultRouter()
 router_v1.register('users', UserViewSet)
