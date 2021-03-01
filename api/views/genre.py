@@ -1,13 +1,17 @@
-from rest_framework import viewsets, filters, mixins
+from rest_framework import filters, mixins, viewsets
 from rest_framework.pagination import PageNumberPagination
 
 from ..models.genre import Genre
-from ..serializers.genre import GenreSerializer
 from ..permission import IsAdminOrReadOnly
+from ..serializers.genre import GenreSerializer
 
 
-class CreateGenreViewSet(mixins.CreateModelMixin, mixins.DestroyModelMixin,
-                            mixins.ListModelMixin, viewsets.GenericViewSet):
+class CreateGenreViewSet(
+    mixins.CreateModelMixin,
+    mixins.DestroyModelMixin,
+    mixins.ListModelMixin,
+    viewsets.GenericViewSet
+):
     pass
 
 

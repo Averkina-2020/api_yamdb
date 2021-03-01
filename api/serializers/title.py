@@ -1,15 +1,15 @@
-from rest_framework import serializers
-
-from api.models import Title, Genre, Category
+from api.models import Category, Genre, Title
 from api.serializers.category import CategorySerializer
 from api.serializers.genre import GenreSerializer
+
+from rest_framework import serializers
 
 
 class TitleDetailSerializer(serializers.ModelSerializer):
     category = serializers.SlugRelatedField(
         slug_field='slug',
         queryset=Category.objects.all(),
-        #requireds=False, 
+        # requireds=False,
     )
     genre = serializers.SlugRelatedField(
         slug_field='slug',

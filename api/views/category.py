@@ -1,13 +1,17 @@
-from rest_framework import viewsets, filters, mixins
+from rest_framework import filters, mixins, viewsets
 from rest_framework.pagination import PageNumberPagination
 
 from ..models.category import Category
-from ..serializers.category import CategorySerializer
 from ..permission import IsAdminOrReadOnly
+from ..serializers.category import CategorySerializer
 
 
-class CreateCategoryViewSet(mixins.CreateModelMixin, mixins.DestroyModelMixin,
-                             mixins.ListModelMixin, viewsets.GenericViewSet):
+class CreateCategoryViewSet(
+    mixins.CreateModelMixin,
+    mixins.DestroyModelMixin,
+    mixins.ListModelMixin,
+    viewsets.GenericViewSet
+):
     pass
 
 

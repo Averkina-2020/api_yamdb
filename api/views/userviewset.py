@@ -1,12 +1,12 @@
+from api.models import User
+from api.permission import IsAdmin
+from api.serializers.userserializer import UserSerializer
+
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-
-from api.models import User
-from api.permission import IsAdminOrReadOnly
-from api.serializers.userserializer import UserSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -15,7 +15,7 @@ class UserViewSet(viewsets.ModelViewSet):
     lookup_field = 'username'
     search_fields = ['username']
     filterset_fields = ['username']
-    permission_classes = [IsAdminOrReadOnly]
+    permission_classes = [IsAdmin]
     pagination_class = PageNumberPagination
 
     @action(detail=False, permission_classes=(IsAuthenticated, ),

@@ -1,7 +1,7 @@
+from api.managers import UserManager
+
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
-
-from api.managers import UserManager
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -72,7 +72,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         # Simplest possible answer: All admins are staff
         return self.is_admin
     # class Meta:
-     #   ordering = ['username']
+    #   ordering = ['username']
 
 
 class TempAuth(models.Model):

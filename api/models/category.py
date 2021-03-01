@@ -13,10 +13,10 @@ class Category(models.Model):
         unique=True,
     )
 
-    #class Meta:
-     #   verbose_name = 'Категория'
-      #  verbose_name_plural = 'Категории'
-       # ordering = ['name']
+    # class Meta:
+    #   verbose_name = 'Категория'
+    #   verbose_name_plural = 'Категории'
+    #   ordering = ['name']
 
-    #def __str__(self):
-     #   return self.name
+    # def __str__(self):
+    #   return self.name
