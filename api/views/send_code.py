@@ -1,51 +1,77 @@
 import os
 
-from django.core.mail import send_mail
+from django.core.mail import BadHeaderError, send_mail
+from django.shortcuts import get_object_or_404
 from django.utils.crypto import get_random_string
-from rest_framework.authtoken.models import Token
+from rest_framework import serializers
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import AccessToken
 
-# load_dotenv()
 from api.models import TempAuth, User
-from api.serializers.userserializer import UserSerializer
-
-# from dotenv import load_dotenv
-
-
-
-def send_code(self, request):
-    if not request.user.is_authenticated:
-        if request.POST:
-            # Пользователь отправляет POST-запрос с параметром email
-            email = request.POST.get('email', '')
-            try:
-                temp_object = TempAuth.objects.get(email=email)
-                conf_code = temp_object.conf_code
-            except TempAuth.DoesNotExist:
-                conf_code = get_random_string(length=62)
-                # создать данные
-                TempAuth.objects.create(email=email, conf_code=conf_code)
-            # YaMDB отправляет письмо с кодом подтверждения
-            # (confirmation_code) на адрес email .
-            send_mail(
-                'Email confirmation',
-                f'Your confirmation code: {conf_code}',
-                from_email=os.environ.get('EMAIL_HOST_USER'),
-                recipient_list=[f'{email}'],
-                fail_silently=False)
+from api.serializers.userserializer import (EmailSerializer,
+                                            TempAuthRegistrationSerializer)
+from api_yamdb.settings import EMAIL_HOST_USER
 
 
-def get_jwt_token(self, request):
-    username = request.data.get('username')
+def send_msg(email, code):
+    subject = 'Отправка кода потверждения'
+    body = f'''
+        {code}
+    '''
+    send_mail(
+        subject, body,
+        from_email=EMAIL_HOST_USER,
+        recipient_list=[email],
+        fail_silently=True
+    )
 
-    if User.objects.filter(username=username).exists():
-        user = User.objects.get(username=username)
-    else:
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            user = serializer.save()
-        else:
-            return Response(serializer.errors)
 
-    token = Token.objects.get_or_create(user=user)
-    return Response(str(token))
+@api_view(['POST'])
+def send_code(request):
+    serializer = EmailSerializer(data=request.data)
+    if not serializer.is_valid():
+        raise serializer.ValidationError(
+            f'this email {request.data.get("email")} is not available'
+        )
+    email = serializer.validated_data.get('email')
+    confirmation_code = get_random_string(length=62)
+
+    TempAuth.objects.create(
+        email=email,
+        confirmation_code=confirmation_code)
+    try:
+        send_msg(email, confirmation_code)
+    except BadHeaderError:
+        return Response('Invalid header found.')
+    return Response(serializer.data, )
+
+
+@api_view(['POST'])
+def get_jwt_token(request):
+    serializer = TempAuthRegistrationSerializer(data=request.data)
+    if not serializer.is_valid(raise_exception=True):
+        raise serializers.ValidationError(
+            'Invalid email or confirmation code'
+        )
+    email = serializer.validated_data.get('email')
+    code = serializer.validated_data.get('conf_code')
+    if TempAuth.objects.filter(email=email,
+                                    conf_code=code).exists():
+        username = email.split('@')[0]
+        user = User.objects.create(
+            email=email,
+            username=username,
+            confirmation_code=code
+        )
+        code_registration = get_object_or_404(
+            TempAuth,
+            email=email,
+            confirmation_code=code
+        )
+        code_registration.delete()
+        access_token = AccessToken.for_user(user)
+        return Response({'token': f'{access_token}'})
+    user = get_object_or_404(User, email=email, confirmation_code=code)
+    access_token = AccessToken.for_user(user)
+    return Response({'token': f'{access_token}'})

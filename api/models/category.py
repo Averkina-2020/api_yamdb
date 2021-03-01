@@ -9,14 +9,13 @@ class Category(models.Model):
     )
     slug = models.SlugField(
         verbose_name='Адрес',
-        max_length=100,
         unique=True,
     )
 
-    #class Meta:
-     #   verbose_name = 'Категория'
+    class Meta:
+        verbose_name = 'Категория'
       #  verbose_name_plural = 'Категории'
-       # ordering = ['name']
+        ordering = ['name']
 
     #def __str__(self):
      #   return self.name

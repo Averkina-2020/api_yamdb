@@ -40,43 +40,33 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name='О себе',
         null=True
     )
-    is_staff = models.BooleanField(verbose_name='is_staff', default=True)
+    is_staff = models.BooleanField(
+        verbose_name='is_staff',
+        default=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+    is_moderator = models.BooleanField(default=False)
 
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['username', ]
 
     def __str__(self):
         return self.email
 
-    def save(self, *args, **kwargs):
-        super(User, self).save(*args, **kwargs)
-        return self
-
-    def has_perm(self, perm, obj=None):
-        "Does the user have a specific permission?"
-        # Simplest possible answer: Yes, always
-        return True
-
-    def has_module_perms(self, app_label):
-        "Does the user have permissions to view the app `app_label`?"
-        # Simplest possible answer: Yes, always
-        return True
-
     @property
     def is_staff(self):
         "Is the user a member of staff?"
-        # Simplest possible answer: All admins are staff
         return self.is_admin
-    # class Meta:
-     #   ordering = ['username']
+
+    class Meta:
+        ordering = ['username']
 
 
 class TempAuth(models.Model):
     email = models.EmailField(
+        max_length=254,
         verbose_name='email address',
         unique=True,
     )
@@ -84,10 +74,3 @@ class TempAuth(models.Model):
         max_length=62,
         verbose_name='confirmation code',
     )
-    date = models.DateField(blank=True, null=True)
-
-    def __str__(self):
-        return self.email
-
-    class Meta:
-        ordering = ['email']

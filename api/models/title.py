@@ -1,7 +1,7 @@
 from django.db import models
 
-from .genre import Genre
 from .category import Category
+from .genre import Genre
 from .utils import year_validator
 
 
@@ -24,7 +24,7 @@ class Title(models.Model):
         Genre,
         verbose_name='Жанр',
         blank=True,
-        null=True,        
+        null=True,   
         #related_name='titles',
     )
     year = models.PositiveSmallIntegerField(
@@ -39,9 +39,5 @@ class Title(models.Model):
         blank=True,
     )
 
-    #class Meta:
-     #   verbose_name = 'Произведение'
-      #  verbose_name_plural = 'Произведение'
-
-    #def __str__(self):
-     #   return self.name
+    class Meta:
+        verbose_name = 'Произведение'

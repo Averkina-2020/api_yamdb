@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from api.models import User
+from api.models import TempAuth, User
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -14,3 +14,15 @@ class UserSerializer(serializers.ModelSerializer):
             'bio']
         model = User
         lookup_field = 'username'
+
+
+class EmailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('email', )
+
+
+class TempAuthRegistrationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TempAuth
+        fields = ['email', 'conf_code', ]
