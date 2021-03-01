@@ -2,6 +2,8 @@ from rest_framework import serializers
 
 from api.models import TempAuth, User
 
+from rest_framework import serializers
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

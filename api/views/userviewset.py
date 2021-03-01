@@ -1,12 +1,12 @@
 from django_filters.rest_framework import DjangoFilterBackend
+from api.models import User
+from api.permission import IsAdmin
+from api.serializers.userserializer import UserSerializer
+
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-
-from api.models import User
-from api.permission import IsAdmin
-from api.serializers.userserializer import UserSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):

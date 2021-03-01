@@ -6,8 +6,12 @@ from ..permission import IsAdminOrReadOnly
 from ..serializers.category import CategorySerializer
 
 
-class CreateCategoryViewSet(mixins.CreateModelMixin, mixins.DestroyModelMixin,
-                             mixins.ListModelMixin, viewsets.GenericViewSet):
+class CreateCategoryViewSet(
+    mixins.CreateModelMixin,
+    mixins.DestroyModelMixin,
+    mixins.ListModelMixin,
+    viewsets.GenericViewSet
+):
     pass
 
 
