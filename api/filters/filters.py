@@ -1,12 +1,13 @@
-from django_filters import rest_framework as filters
-
 from api.models.title import Title
+
+from django_filters import rest_framework as filters
 
 
 class TitlesFilter(filters.FilterSet):
     name = filters.CharFilter(
         field_name='name',
-        lookup_expr='contains')
+        lookup_expr='contains'
+    )
     category = filters.CharFilter(
         field_name='category__slug',
         lookup_expr='contains'

@@ -6,8 +6,12 @@ from ..permission import IsAdminOrReadOnly
 from ..serializers.genre import GenreSerializer
 
 
-class CreateGenreViewSet(mixins.CreateModelMixin, mixins.DestroyModelMixin,
-                            mixins.ListModelMixin, viewsets.GenericViewSet):
+class CreateGenreViewSet(
+    mixins.CreateModelMixin,
+    mixins.DestroyModelMixin,
+    mixins.ListModelMixin,
+    viewsets.GenericViewSet
+):
     pass
 
 

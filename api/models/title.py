@@ -18,14 +18,14 @@ class Title(models.Model):
         on_delete=models.CASCADE,
         blank=True,
         null=True,
-        #related_name='titles',
+        related_name='titles',
     )
     genre = models.ManyToManyField(
         Genre,
         verbose_name='Жанр',
         blank=True,
-        null=True,   
-        #related_name='titles',
+        null=True,
+        # related_name='titles',
     )
     year = models.PositiveSmallIntegerField(
         verbose_name='Год выпуска',
