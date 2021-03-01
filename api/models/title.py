@@ -25,7 +25,7 @@ class Title(models.Model):
         verbose_name='Жанр',
         blank=True,
         null=True,
-        #related_name='titles',
+        # related_name='titles',
     )
     year = models.PositiveSmallIntegerField(
         verbose_name='Год выпуска',

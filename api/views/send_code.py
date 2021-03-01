@@ -1,17 +1,18 @@
-import os
+from api.models import TempAuth, User
+from api.serializers.userserializer import (EmailSerializer,
+                                            TempAuthRegistrationSerializer)
+
+from api_yamdb.settings import EMAIL_HOST_USER
 
 from django.core.mail import BadHeaderError, send_mail
 from django.shortcuts import get_object_or_404
 from django.utils.crypto import get_random_string
+
 from rest_framework import serializers
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework_simplejwt.tokens import AccessToken
 
-from api.models import TempAuth, User
-from api.serializers.userserializer import (EmailSerializer,
-                                            TempAuthRegistrationSerializer)
-from api_yamdb.settings import EMAIL_HOST_USER
+from rest_framework_simplejwt.tokens import AccessToken
 
 
 def send_msg(email, code):
@@ -56,8 +57,10 @@ def get_jwt_token(request):
         )
     email = serializer.validated_data.get('email')
     code = serializer.validated_data.get('conf_code')
-    if TempAuth.objects.filter(email=email,
-                                    conf_code=code).exists():
+    if TempAuth.objects.filter(
+        email=email,
+        conf_code=code
+    ).exists():
         username = email.split('@')[0]
         user = User.objects.create(
             email=email,
