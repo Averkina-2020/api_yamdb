@@ -3,6 +3,9 @@ from django.contrib.auth.models import BaseUserManager
 
 class UserManager(BaseUserManager):
     def create_user(self, email, username, password=None, **kwargs):
+        if not email:
+            raise ValueError('Почта должна быть указана')
+        email = self.normalize_email(email)
         user = self.model(
             email=email,
             username=username,

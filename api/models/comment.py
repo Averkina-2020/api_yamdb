@@ -13,7 +13,9 @@ class Comment(models.Model):
     review = models.ForeignKey(
         Review,
         on_delete=models.CASCADE,
-        related_name='comments'
+        related_name='comments',
+        blank=True,
+        verbose_name='Отзыв'
     )
     text = models.TextField()
     pub_date = models.DateTimeField(
