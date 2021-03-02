@@ -7,7 +7,7 @@ from .userviewset import UserViewSet
 
 __All__ = [
     CommentViewSet,
-    GenreViewSet,
+    CategoryOrGenreViewSet,
     ReviewViewSet,
     send_code,
     get_jwt_token,
