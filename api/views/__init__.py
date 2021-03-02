@@ -5,10 +5,11 @@ from .send_code import get_jwt_token, send_code
 from .titles import TitelViewSet
 from .userviewset import UserViewSet
 
-CommentViewSet
-GenreViewSet
-ReviewViewSet
-send_code
-get_jwt_token
-TitelViewSet
-UserViewSet
+__All__ = [
+    CommentViewSet,
+    GenreViewSet,
+    ReviewViewSet,
+    send_code,
+    get_jwt_token,
+    TitelViewSet,
+    UserViewSet]

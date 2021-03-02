@@ -1,5 +1,4 @@
 from api.serializers.commentserializer import CommentSerializer
 from api.serializers.reviewserializer import ReviewSerializer
 
-CommentSerializer
-ReviewSerializer
+__All__ = [CommentSerializer, ReviewSerializer]

@@ -4,9 +4,9 @@ from rest_framework.permissions import IsAuthenticated
 
 class IsAdmin(permissions.BasePermission):
     def has_permission(self, request, view):
-        return bool(
+        return (
             request.user.is_authenticated
-            and not request.user.role != 'admin'
+            and request.user.is_role_admin
         )
 
 
@@ -19,7 +19,7 @@ class IsAuthenticatedOrAdmin(permissions.IsAuthenticated):
 
 class IsAuthorModeratorAdmin(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
-        return bool(
+        return (
             request.method in permissions.SAFE_METHODS
             or request.user.is_authenticated
             and (
@@ -32,12 +32,12 @@ class IsAuthorModeratorAdmin(permissions.BasePermission):
 
 class IsAdminOrReadOnly(permissions.BasePermission):
     def has_permission(self, request, view):
-        return bool(
+        return (
             request.method in permissions.SAFE_METHODS
             or request.user.is_authenticated
             and (
                 request.user.is_staff
-                or request.user.role == 'admin'
+                or request.user.is_role_admin
             )
         )
 
@@ -48,5 +48,5 @@ class IsAuthorOrReadOnly(permissions.IsAuthenticatedOrReadOnly):
             request.method in permissions.SAFE_METHODS
             or obj.author == request.user
             or request.method == 'DELETE'
-            and request.user.role in ['admin', 'moderator']
+            and (request.user.is_role_admin or request.user.is_role_moderator)
         )

@@ -60,6 +60,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         "Is the user a member of staff?"
         return self.is_admin
 
+    @property
+    def is_role_admin(self):
+        return self.role == 'admin'
+
+    @property
+    def is_role_moderator(self):
+        return self.role == 'moderator'
+
     class Meta:
         ordering = ['username']
 
