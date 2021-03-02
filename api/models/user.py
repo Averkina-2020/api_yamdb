@@ -63,7 +63,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     @property
     def is_staff(self):
-        "Is the user a member of the staff?"
         return self.is_admin
 
     @property
@@ -74,8 +73,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     def is_role_moderator(self):
         return self.role == 'moderator'
 
-    class Meta:
-        ordering = ['username']
 
 class TempAuth(models.Model):
     email = models.EmailField(
