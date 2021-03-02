@@ -1,7 +1,7 @@
-from api.managers import UserManager
-
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
+
+from api.managers import UserManager
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -66,6 +66,16 @@ class User(AbstractBaseUser, PermissionsMixin):
         "Is the user a member of the staff?"
         return self.is_admin
 
+    @property
+    def is_role_admin(self):
+        return self.role == 'admin'
+
+    @property
+    def is_role_moderator(self):
+        return self.role == 'moderator'
+
+    class Meta:
+        ordering = ['username']
 
 class TempAuth(models.Model):
     email = models.EmailField(

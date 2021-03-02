@@ -1,7 +1,6 @@
-from api.models import TempAuth, User
+from rest_framework import serializers
 
-from rest_framework import serializers
-from rest_framework import serializers
+from api.models import TempAuth, User
 
 
 class UserSerializer(serializers.ModelSerializer):
