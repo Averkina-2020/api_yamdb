@@ -4,8 +4,7 @@ from rest_framework.routers import DefaultRouter
 
 from api.views import (CommentViewSet, ReviewViewSet, TitelViewSet,
                        UserViewSet, get_jwt_token, send_code)
-from api.views.category import CategoryViewSet
-from api.views.genre import GenreViewSet
+from api.views.category_genre import CategoryOrGenreViewSet
 
 router_v1 = DefaultRouter()
 router_v1.register('users', UserViewSet)
@@ -19,8 +18,8 @@ router_v1.register(
     CommentViewSet,
     basename='comments'
 )
-router_v1.register('genres', GenreViewSet)
-router_v1.register('categories', CategoryViewSet)
+router_v1.register('genres', CategoryOrGenreViewSet, basename='genres')
+router_v1.register('categories', CategoryOrGenreViewSet, basename='categories')
 router_v1.register('titles', TitelViewSet)
 
 urlpatterns = [
