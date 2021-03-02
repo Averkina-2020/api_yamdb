@@ -5,10 +5,4 @@ from .review import Review
 from .title import Title
 from .user import TempAuth, User
 
-Category
-Comment
-Genre
-Review
-Title
-TempAuth
-User
+__All__ = [Category, Comment, Genre, Review, Title, TempAuth, User]
