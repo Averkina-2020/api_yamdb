@@ -42,7 +42,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     is_staff = models.BooleanField(
         verbose_name='is_staff',
-        default=True)
+        default=True
+    )
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_moderator = models.BooleanField(default=False)
@@ -52,16 +53,18 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', ]
 
+    class Meta:
+        ordering = ['username']
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
+
     def __str__(self):
         return self.email
 
     @property
     def is_staff(self):
-        "Is the user a member of staff?"
+        "Is the user a member of the staff?"
         return self.is_admin
-
-    class Meta:
-        ordering = ['username']
 
 
 class TempAuth(models.Model):

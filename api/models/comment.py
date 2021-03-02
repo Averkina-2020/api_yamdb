@@ -8,7 +8,8 @@ class Comment(models.Model):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='comments'
+        related_name='comments',
+        verbose_name='Автор',
     )
     review = models.ForeignKey(
         Review,
@@ -17,15 +18,17 @@ class Comment(models.Model):
         blank=True,
         verbose_name='Отзыв'
     )
-    text = models.TextField()
+    text = models.TextField(verbose_name='Комментарий')
     pub_date = models.DateTimeField(
-        'Дата добавления',
         auto_now_add=True,
-        db_index=True
+        db_index=True,
+        verbose_name='Дата публикации'
     )
 
     class Meta:
         ordering = ('-pub_date',)
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
 
     def __str__(self):
         return self.text

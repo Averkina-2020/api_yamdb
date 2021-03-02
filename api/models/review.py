@@ -32,19 +32,21 @@ class Review(models.Model):
         verbose_name='Рейтинг'
     )
     pub_date = models.DateTimeField(
-        'Дата публикации',
+        verbose_name='Дата публикации',
         auto_now_add=True,
         db_index=True,
     )
 
-    def __str__(self):
-        return self.text
-
     class Meta:
         ordering = ['-pub_date']
+        verbose_name = 'Отзыв'
+        verbose_name_plural = 'Отзывы'
         constraints = [
             models.UniqueConstraint(
                 fields=['author', 'title'],
                 name='unique_review'
             ),
         ]
+
+    def __str__(self):
+        return self.text

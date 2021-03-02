@@ -1,12 +1,14 @@
 from rest_framework import filters, mixins, viewsets
 from rest_framework.pagination import PageNumberPagination
 
+from ..models.category import Category
 from ..models.genre import Genre
 from ..permission import IsAdminOrReadOnly
+from ..serializers.category import CategorySerializer
 from ..serializers.genre import GenreSerializer
 
 
-class CreateGenreViewSet(
+class CreateCategoryOrGenreViewSet(
     mixins.CreateModelMixin,
     mixins.DestroyModelMixin,
     mixins.ListModelMixin,
@@ -15,11 +17,19 @@ class CreateGenreViewSet(
     pass
 
 
-class GenreViewSet(CreateGenreViewSet):
-    queryset = Genre.objects.all()
-    serializer_class = GenreSerializer
+class CategoryOrGenreViewSet(CreateCategoryOrGenreViewSet):
     pagination_class = PageNumberPagination
     permission_classes = [IsAdminOrReadOnly]
     filter_backends = [filters.SearchFilter]
     search_fields = ['name', ]
     lookup_field = 'slug'
+
+    def get_queryset(self):
+        if self.basename == 'categories':
+            return Category.objects.all()
+        return Genre.objects.all()
+
+    def get_serializer_class(self):
+        if self.basename == 'categories':
+            return CategorySerializer
+        return GenreSerializer
