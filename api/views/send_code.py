@@ -1,4 +1,4 @@
-from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.hashers import make_password 
 from django.core.mail import BadHeaderError, send_mail
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
@@ -34,7 +34,7 @@ def send_code(request):
             f'this email {email} is not available'
         )
     email = serializer.validated_data.get('email')
-    confirmation_code = default_token_generator.make_token(request.user)
+    confirmation_code = make_password('') 
 
     TempAuth.objects.create(
         email=email,
