@@ -1,6 +1,6 @@
-from django_filters import rest_framework as filters
-
 from api.models.title import Title
+
+from django_filters import rest_framework as filters
 
 
 class TitlesFilter(filters.FilterSet):

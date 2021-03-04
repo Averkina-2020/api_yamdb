@@ -1,15 +1,18 @@
-from django.contrib.auth.hashers import make_password
-from django.core.mail import BadHeaderError, send_mail
-from django.shortcuts import get_object_or_404
-from rest_framework import serializers
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework_simplejwt.tokens import AccessToken
-
 from api.models import TempAuth, User
 from api.serializers.userserializer import (EmailSerializer,
                                             TempAuthRegistrationSerializer)
+
 from api_yamdb.settings import EMAIL_HOST_USER
+
+from django.contrib.auth.hashers import make_password
+from django.core.mail import BadHeaderError, send_mail
+from django.shortcuts import get_object_or_404
+
+from rest_framework import serializers
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+from rest_framework_simplejwt.tokens import AccessToken
 
 
 def send_msg(email, code):
